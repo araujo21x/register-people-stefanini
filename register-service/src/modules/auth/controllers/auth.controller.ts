@@ -8,7 +8,7 @@ import { StandardApiResponses } from '@shared/decorators/api-responses.decorator
 import { UserRegisterResponseDto } from '../dto/response/user-register-response.dto';
 import { LoginResponseDto } from '../dto/response/login-response.dto';
 
-@ApiTags('autenticação')
+@ApiTags('Autenticação')
 @Controller('auth')
 export class AuthController {
   constructor(

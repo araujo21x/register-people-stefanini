@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, ExecutionContext } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AppError } from '@shared/filter/error/exceptions/app.error';
 import { User } from 'generated/prisma';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
-  canActivate(context: any) {
+  canActivate(context: ExecutionContext) {
     return super.canActivate(context);
   }
 

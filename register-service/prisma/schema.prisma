@@ -43,8 +43,8 @@ model People {
 
   // relationship
   userId  String   @map("user_id") @db.Uuid
-  user    User     @relation(fields: [userId], references: [id])
-  Address Address?
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  address Address?
 
   @@map("people")
 }
@@ -63,7 +63,7 @@ model Address {
 
   // relationship
   peopleId String @unique @map("people_id") @db.Uuid
-  people   People @relation(fields: [peopleId], references: [id])
+  people   People @relation(fields: [peopleId], references: [id], onDelete: Cascade)
 
   @@map("addresses")
 }
