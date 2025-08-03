@@ -23,9 +23,9 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "src/app/utils"),
       "@libs": path.resolve(__dirname, "src/app/libs"),
       "@context": path.resolve(__dirname, "src/app/context"),
-      "@app": path.resolve(__dirname, "src/app"),
+      "@services": path.resolve(__dirname, "src/app/services"),
       "@view": path.resolve(__dirname, "src/view"),
-      
+      "@app": path.resolve(__dirname, "src/app"),
     },
   },
 })

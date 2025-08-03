@@ -1,5 +1,6 @@
 import { ThemeSwitch } from "@components/theme-switch";
 import logo from "@view/assets/logo.png";
+import { RegisterForm } from "./components/register-form";
 
 export function RegisterUser() {
   return (
@@ -12,7 +13,7 @@ export function RegisterUser() {
           Register People
         </a>
 
-        <LoginForm />
+        <RegisterForm />
       </div>
     </div>
   )

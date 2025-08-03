@@ -10,8 +10,9 @@
       "@utils/*": ["src/app/utils/*"],
       "@libs/*": ["src/app/libs/*"],
       "@context/*": ["src/app/context/*"],
-      "@app/*": ["src/app/*"],
+      "@services/*": ["src/app/services/*"],
       "@view/*": ["src/view/*"],
+      "@app/*": ["src/app/*"]
     }
   }
 } 

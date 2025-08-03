@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@com
 import { TextInput } from "@components/inputs/text-input"
 import { Form } from "@components/shadcn/components/ui/form"
 import { useLogin } from "./use-login"
+import { routes } from "../../../../../../app/Router/routes"
 
 export function LoginForm({
   className,
@@ -43,7 +44,7 @@ export function LoginForm({
 
                 <div className="text-center text-sm">
                   Não tem uma conta?{" "}
-                  <a href="#" className="underline underline-offset-4">
+                  <a href={routes.auth.registerUser} className="underline underline-offset-4">
                     Cadastre-se
                   </a>
                 </div>
