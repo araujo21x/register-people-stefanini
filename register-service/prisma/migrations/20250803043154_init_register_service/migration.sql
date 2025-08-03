@@ -61,7 +61,7 @@ CREATE UNIQUE INDEX "people_cpf_key" ON "public"."people"("cpf");
 CREATE UNIQUE INDEX "addresses_people_id_key" ON "public"."addresses"("people_id");
 
 -- AddForeignKey
-ALTER TABLE "public"."people" ADD CONSTRAINT "people_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."people" ADD CONSTRAINT "people_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."addresses" ADD CONSTRAINT "addresses_people_id_fkey" FOREIGN KEY ("people_id") REFERENCES "public"."people"("_id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."addresses" ADD CONSTRAINT "addresses_people_id_fkey" FOREIGN KEY ("people_id") REFERENCES "public"."people"("_id") ON DELETE CASCADE ON UPDATE CASCADE;
