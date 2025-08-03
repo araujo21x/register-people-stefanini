@@ -16,6 +16,13 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@prisma/*": ["src/database/prisma/*"],
+      "@module/*": ["src/modules/*"],
+      "@shared/*": ["src/shared/*"],
+      "@errors/*": ["src/shared/filter/error/exceptions/*"],
+      "@config/*": ["src/config/*"]
+    }
   }
 }
