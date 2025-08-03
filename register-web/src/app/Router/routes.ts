@@ -1,6 +1,6 @@
 export const routes = {
   auth: {
-    signIn: '/sign-in',
+    signIn: '/',
     registerUser: '/register-user',
   },
   private: {

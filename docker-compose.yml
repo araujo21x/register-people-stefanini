@@ -1,0 +1,62 @@
+services:
+  register-db:
+    image: postgres:17.5
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - register_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+    networks:
+      - register-network
+
+  register-service:
+    build:
+      context: ./register-service
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:${PORT}"
+    restart: always
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: ${NODE_ENV}
+      JWT_SECRET: ${JWT_SECRET}
+      PORT: ${PORT}
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@register-db:5432/${POSTGRES_DB}?schema=public"
+    depends_on:
+      - register-db
+    networks:
+      - register-network
+    command: >
+      sh -c "npx prisma migrate deploy && npm run start:prod"
+
+  register-web:
+    build:
+      context: ./register-web
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - register-service
+    networks:
+      - register-network
+
+volumes:
+  register_data:
+
+networks:
+  register-network:
+    driver: bridge
