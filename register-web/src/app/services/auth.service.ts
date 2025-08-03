@@ -25,7 +25,12 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
-      localStorage.setItem('access_token', data.access_token)
+      console.log('data', data)
+      if (data && data.accessToken) {
+        localStorage.setItem('accessToken', data.accessToken)
+      } else {
+        console.error('Access token não encontrado na resposta de login:', data)
+      }
     },
     onError: (error: ApiError) => {
       console.error('Erro no login:', error)
@@ -37,7 +42,7 @@ export const useRegister = () => {
   return useMutation({
     mutationFn: authApi.register,
     onSuccess: (data) => {
-      localStorage.setItem('access_token', data.access_token)
+      localStorage.setItem('accessToken', data.accessToken)
       localStorage.setItem('user', JSON.stringify(data.user))
     },
     onError: (error: ApiError) => {
@@ -51,7 +56,7 @@ export const useProfile = () => {
   return useQuery({
     queryKey: ['profile'],
     queryFn: authApi.getProfile,
-    enabled: !!localStorage.getItem('access_token'),
+    enabled: !!localStorage.getItem('accessToken'),
     staleTime: 5 * 60 * 1000,
     retry: 1
   })

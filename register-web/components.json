@@ -6,7 +6,7 @@
   "tailwind": {
     "config": "",
     "css": "src/view/styles/index.css",
-    "baseColor": "slate",
+    "baseColor": "sky",
     "cssVariables": true,
     "prefix": ""
   },

@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { LoginService } from '../services/login.service';
 import { UserRegisterService } from '../services/user-register.service';
@@ -7,6 +7,10 @@ import { LoginDto } from '../dto/request/login.dto';
 import { StandardApiResponses } from '@shared/decorators/api-responses.decorator';
 import { UserRegisterResponseDto } from '../dto/response/user-register-response.dto';
 import { LoginResponseDto } from '../dto/response/login-response.dto';
+import { UserResponseDto } from '@shared/dto/response/user-response.dto';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { GetPayload } from '@shared/decorators/get-payload.decorator';
+import { User } from 'generated/prisma';
 
 @ApiTags('Autenticação')
 @Controller('auth')
@@ -30,5 +34,14 @@ export class AuthController {
   @StandardApiResponses()
   async login(@Body() body: LoginDto): Promise<LoginResponseDto> {
     return await this.loginService.execute(body);
+  }
+
+  @Get('profile')
+  @ApiOperation({ summary: 'Perfil do usuário' })
+  @ApiResponse({ status: 201, description: 'Perfil do usuário.', type: UserResponseDto })
+  @StandardApiResponses()
+  @UseGuards(JwtAuthGuard)
+  getProfile(@GetPayload() user: User): UserResponseDto {
+    return user;
   }
 }
