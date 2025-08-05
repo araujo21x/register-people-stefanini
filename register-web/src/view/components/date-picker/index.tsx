@@ -1,4 +1,3 @@
-"use client"
 
 import * as React from "react"
 import { ChevronDownIcon } from "lucide-react"
@@ -61,7 +60,7 @@ export function DefaultDatePicker<
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
-                  className={`w-48 justify-between font-normal ${fieldState.error ? "border-red-500" : ""}`}
+                  className={`w-48 justify-between font-normal ${fieldState.error ? "border-red-500" : ""} ${!field.value ? "placeholder:text-gray-400" : ""}`}
                   disabled={disabled}
                   type="button"
                 >

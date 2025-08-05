@@ -14,7 +14,18 @@ export const PeopleFormDialogSchema = z.object({
     .optional(),
   birthday: z
     .string({ message: "Data de nascimento é obrigatória" })
-    .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Data de nascimento deve estar no formato AAAA-MM-DD" }),
+    .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Data de nascimento deve estar no formato AAAA-MM-DD" })
+    .refine(
+      (val) => {
+        if (!val) return false;
+        const date = new Date(val);
+        const now = new Date();
+        date.setHours(0, 0, 0, 0);
+        now.setHours(0, 0, 0, 0);
+        return date < now;
+      },
+      { message: "Data de nascimento deve ser igual ou anterior a hoje" }
+    ),
   placeBirth: z
     .string({ message: "Naturalidade inválida" })
     .max(255, { message: "Naturalidade deve ter no máximo 25 caracteres" })

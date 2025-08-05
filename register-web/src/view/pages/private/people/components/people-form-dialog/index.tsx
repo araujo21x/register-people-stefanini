@@ -50,7 +50,7 @@ export function PeopleFormDialog({ type, id }: PeopleFormDialogProps) {
                   : "Preencha os dados para cadastrar uma nova pessoa."}
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-2">
+            <div className="grid gap-4">
               <TextInput control={form.control} label="Nome" name="name" type="text" placeholder="Nome" required />
               <div className="flex flex-row gap-2">
                 <div className="w-3/2">

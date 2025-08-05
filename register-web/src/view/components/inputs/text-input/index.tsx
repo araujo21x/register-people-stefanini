@@ -57,6 +57,7 @@ export function TextInput<
               placeholder={placeholder}
               disabled={disabled}
               aria-invalid={!!fieldState.error}
+              className="placeholder:text-gray-400"
               {...field}
               {...(mask ? { inputMode: "numeric", pattern: mask } : {})}
             />

@@ -57,7 +57,7 @@ export function CPFInput<
           <FormControl>
             <Input
               type="text"
-              placeholder={placeholder}
+              placeholder={placeholder ?? "Digite o CPF (apenas números)"}
               disabled={disabled}
               aria-invalid={!!fieldState.error}
               value={field.value ? maskCPF(field.value) : ""}

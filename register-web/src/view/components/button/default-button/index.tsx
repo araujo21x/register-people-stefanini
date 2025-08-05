@@ -9,7 +9,7 @@ interface DefaultButtonProps extends React.ComponentProps<typeof Button> {
 export function DefaultButton({ children, ...props }: DefaultButtonProps) {
   return (
     <Button
-      className={`transition-colors duration-200 active:scale-95 ${props.className ?? ""}`}
+      className={`transition-colors duration-200 active:scale-95 placeholder:text-gray-400 ${props.className ?? ""}`}
       {...props}
     >
       {children}
