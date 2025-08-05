@@ -49,7 +49,7 @@ export function useRegisterForm(): IUserRegister {
         email: data.email,
         password: data.password,
         confirmPassword: data.confirmPassword,
-      })
+      })  
 
       await login({
         email: data.email,

@@ -5,6 +5,7 @@ import logo from "@view/assets/logo.png";
 export function SignIn() {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
+
       <ThemeSwitch />
 
       <div className="flex flex-col items-center justify-center gap-6 p-6 md:p-10">

@@ -5,6 +5,7 @@ import { TextInput } from "@components/inputs/text-input"
 import { Form } from "@components/shadcn/components/ui/form"
 import { useRegisterForm } from "./use-register"
 import { routes } from "../../../../../../app/Router/routes"
+import { DefaultLoading } from "@components/loading"
 
 export function RegisterForm({
   className,
@@ -14,6 +15,7 @@ export function RegisterForm({
 
   return (
     <div className={cn("flex flex-col gap-6 w-100", className)} {...props}>
+      <DefaultLoading isLoading={isLoading} />
       <Card>
 
         <CardHeader className="text-center">

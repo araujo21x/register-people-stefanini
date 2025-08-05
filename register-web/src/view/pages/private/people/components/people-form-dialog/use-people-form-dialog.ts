@@ -17,6 +17,7 @@ export interface UsePeopleFormDialogReturn {
   resetForm: () => void;
   handleOpenChange: (open: boolean) => void;
   isOpen: boolean;
+  isLoading: boolean;
 }
 
 export function usePeopleFormDialog(type: PeopleFormDialogType, id?: string): UsePeopleFormDialogReturn {
@@ -63,7 +64,7 @@ export function usePeopleFormDialog(type: PeopleFormDialogType, id?: string): Us
 
   const resetForm = () => form.reset()
 
-  return { isEdit, form, handleSubmit, resetForm, handleOpenChange, isOpen }
+  return { isEdit, form, handleSubmit, resetForm, handleOpenChange, isOpen, isLoading: createPersonMutation.isPending || updatePersonMutation.isPending }
 }
 
 function getDefaultValues(personData: Person | undefined): PeopleFormDialogSchemaType {

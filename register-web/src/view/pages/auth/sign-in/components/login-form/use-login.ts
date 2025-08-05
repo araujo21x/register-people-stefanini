@@ -4,6 +4,7 @@ import { useForm, type UseFormReturn } from "react-hook-form"
 import { z } from "zod"
 import { useAuth } from "../../../../../../app/context/auth/auth-context"
 import { useNavigate, useLocation } from "react-router-dom"
+import { useState } from "react"
 
 interface IUserLogin {
   form: UseFormReturn<z.infer<typeof LoginFormSchema>>
@@ -18,6 +19,7 @@ const LoginFormSchema = z.object({
 })
 
 export function useLogin(): IUserLogin {
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const { login } = useAuth()
@@ -32,14 +34,18 @@ export function useLogin(): IUserLogin {
 
   const handleSubmit = form.handleSubmit(async (data) => {
     try {
+      setIsLoading(true)
+      
       await login(data)
       const from = location.state?.from?.pathname || '/people'
       navigate(from, { replace: true })
+      setIsLoading(false)
     } catch (error: any) {
       console.error('Erro no login:', error)
+      setIsLoading(false)
     }
   })
 
-  return { form, handleSubmit, isLoading: false, error: null }
+  return { form, handleSubmit, isLoading, error: null }
 }
 
