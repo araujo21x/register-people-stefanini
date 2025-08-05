@@ -25,7 +25,6 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
-      console.log('data', data)
       if (data && data.accessToken) {
         localStorage.setItem('accessToken', data.accessToken)
       } else {

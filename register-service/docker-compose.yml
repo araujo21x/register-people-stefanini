@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   register-db:
+    container_name: register-db-stefanini-test
     image: postgres:17.5
     restart: always
     env_file:
@@ -24,6 +25,7 @@ services:
       - register-network
 
   register-service:
+    container_name: register-service-stefanini-test
     build:
       context: .
       dockerfile: Dockerfile

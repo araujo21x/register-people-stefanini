@@ -50,27 +50,19 @@ export function useRegisterForm(): IUserRegister {
         password: data.password,
         confirmPassword: data.confirmPassword,
       })
-      
-      // Após o registro bem-sucedido, faz login automaticamente
+
       await login({
         email: data.email,
         password: data.password,
       })
-      
-      // Redireciona para a página que o usuário tentou acessar ou para /people
+
       const from = location.state?.from?.pathname || '/people'
       navigate(from, { replace: true })
     } catch (error: any) {
       console.error('Erro no registro:', error)
-      // O erro será tratado pelo contexto de autenticação
     }
   })
 
-  return {
-    form,
-    handleSubmit,
-    isLoading: registerMutation.isPending,
-    error: registerMutation.error?.message || null
-  }
+  return { form, handleSubmit, isLoading: registerMutation.isPending, error: registerMutation.error?.message || null }
 }
 

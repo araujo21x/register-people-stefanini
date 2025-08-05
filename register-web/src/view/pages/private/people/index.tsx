@@ -8,7 +8,7 @@ import { DefaultPagination } from "@components/pagination";
 
 
 export function People() {
-  const { data, page, setPage } = usePeople()
+  const { data, page, handleSetPage } = usePeople()
 
   return (
     <div className="flex flex-col h-full p-2 justify-between">
@@ -16,10 +16,10 @@ export function People() {
         <PeopleFormDialog type="register" />
       </div>
       <div className="flex-1 my-2 overflow-auto max-h-[76vh]">
-        <DataTable<Person, Person> columns={columns} data={data?.people || []} />
+        <DataTable<Person, Person> columns={columns} data={data.people} />
       </div>
       <div className="py-2">
-        <DefaultPagination page={page} totalItens={data?.count || 1} onPageChange={setPage} />
+        <DefaultPagination page={page} totalItens={data.count} onPageChange={handleSetPage} />
       </div>
     </div>
   )

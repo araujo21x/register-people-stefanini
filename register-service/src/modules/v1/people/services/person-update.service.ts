@@ -1,7 +1,6 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Prisma, User } from 'generated/prisma';
 import { PrismaService } from '@prisma/prisma.service';
-import { AppError } from '@shared/filter/error/exceptions/app.error';
 import { PersonUpdateResponse } from '../dto/response/person-update-response.dto';
 import { PersonUpdateDto } from '../dto/request/person-update.dto';
 import { DataNotFoundError } from '@shared/filter/error/exceptions/data-not-found.error';
@@ -11,8 +10,6 @@ export class PersonUpdateService {
   constructor(private readonly prisma: PrismaService) {}
 
   async execute(id: string, body: PersonUpdateDto, user: User): Promise<PersonUpdateResponse> {
-    // await this.validatePerson(id, body, user);
-
     const person = await this.prisma.people.findFirst({ where: { id, userId: user.id } });
     if (!person) throw new DataNotFoundError('Pessoa');
 
@@ -23,20 +20,6 @@ export class PersonUpdateService {
     });
 
     return personUpdated;
-  }
-
-  private async validatePerson(id: string, body: PersonUpdateDto, user: User): Promise<void> {
-    if (!body.cpf && !body.name && !body.birthday) return;
-
-    const where: Prisma.PeopleWhereInput = { id: { not: id }, userId: user.id };
-
-    if (body.cpf) where.cpf = body.cpf;
-    if (body.name) where.name = body.name;
-    if (body.birthday) where.birthday = body.birthday;
-
-    const person = await this.prisma.people.findFirst({ where });
-
-    if (person) throw new AppError('Pessoa já cadastrada', HttpStatus.BAD_REQUEST);
   }
 
   private buildPerson(body: PersonUpdateDto): Prisma.PeopleUpdateInput {

@@ -1,11 +1,22 @@
 import { useState } from "react"
-import { usePeople as usePeopleService } from "../../../../app/services/people.service"
+import { usePeople as usePeopleService, type PeopleListResponse } from "../../../../app/services/people.service"
 
-export function usePeople() {
+interface UsePeopleReturn {
+  data: PeopleListResponse;
+  isLoading: boolean;
+  page: number;
+  handleSetPage: (newPage: number) => void;
+}
+
+export function usePeople(): UsePeopleReturn {
   const [page, setPage] = useState(1)
   const LIMIT = 15
 
-  const { data, isLoading, error } =  usePeopleService(page, LIMIT)
+  const { data, isLoading } = usePeopleService(page, LIMIT)
 
-  return { data, isLoading, error, page, setPage }
+  const handleSetPage = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  return { data: data || { people: [], count: 0 }, isLoading, page, handleSetPage }
 }

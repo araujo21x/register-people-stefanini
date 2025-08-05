@@ -18,7 +18,7 @@ import { DefaultButton } from "@components/button/default-button";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { logout } = useAuth()
-  const { selectedNav, setSelectedNav, data } = useAppSidebar()
+  const { selectedNav, handleSetSelectedNav, data } = useAppSidebar()
 
   return (
     <Sidebar variant="floating" {...props}>
@@ -52,7 +52,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         ? "bg-primary text-primary-foreground"
                         : "hover:bg-accent hover:text-accent-foreground"
                     }`}
-                    onClick={() => setSelectedNav(item.title)}
+                    onClick={() => handleSetSelectedNav(item.title)}
                   >
                     {item.icon && <item.icon className="size-4" />} {item.title}
                   </Link>

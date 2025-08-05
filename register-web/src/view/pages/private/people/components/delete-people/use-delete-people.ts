@@ -1,18 +1,18 @@
 import { useDeletePerson } from "../../../../../../app/services/people.service";
 import { toast } from "react-toastify";
 
-export function useDeletePeople() {
+export type UseDeletePeopleReturn = {
+  handleDeletePerson: (id: string) => Promise<void>;
+};
+
+export function useDeletePeople(): UseDeletePeopleReturn {
   const deletePersonMutation = useDeletePerson();
 
   const handleDeletePerson = async (id: string) => {
     await deletePersonMutation.mutateAsync(id, {
-      onSuccess: () => {
-        toast.success("Pessoa deletada com sucesso")
-      }
+      onSuccess: () => toast.success("Pessoa deletada com sucesso")
     });
   }
 
-  return {
-    handleDeletePerson
-  }
+  return { handleDeletePerson }
 }

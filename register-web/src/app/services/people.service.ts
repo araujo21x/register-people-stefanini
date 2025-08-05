@@ -82,7 +82,7 @@ export const usePeople = (page = 1, limit = 10) => {
   return useQuery({
     queryKey: ['people', page, limit],
     queryFn: () => peopleApi.getPeople(page, limit),
-    staleTime: 2 * 60 * 1000, // 2 minutos
+    staleTime: 1 * 60 * 1000,
   })
 }
 
@@ -94,7 +94,7 @@ export const usePerson = (id?: string) => {
       return peopleApi.getPerson(id)
     },
     enabled: id != null,
-    staleTime: 5 * 60 * 1000, // 5 minutos
+    staleTime: 1 * 60 * 1000,
   })
 }
 

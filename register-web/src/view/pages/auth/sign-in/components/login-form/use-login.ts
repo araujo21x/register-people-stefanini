@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, type UseFormReturn } from "react-hook-form"
 import { z } from "zod"
@@ -32,20 +33,13 @@ export function useLogin(): IUserLogin {
   const handleSubmit = form.handleSubmit(async (data) => {
     try {
       await login(data)
-      // Redireciona para a página que o usuário tentou acessar ou para /people
       const from = location.state?.from?.pathname || '/people'
       navigate(from, { replace: true })
     } catch (error: any) {
       console.error('Erro no login:', error)
-      // O erro será tratado pelo contexto de autenticação
     }
   })
 
-  return {
-    form,
-    handleSubmit,
-    isLoading: false, // O loading será gerenciado pelo contexto
-    error: null // O erro será gerenciado pelo contexto
-  }
+  return { form, handleSubmit, isLoading: false, error: null }
 }
 

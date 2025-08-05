@@ -18,10 +18,10 @@ import { DefaultDatePicker } from "@components/date-picker"
 import { CPFInput } from "@components/inputs/cpf"
 
 export function PeopleFormDialog({ type, id }: PeopleFormDialogProps) {
-  const { isEdit, form, handleSubmit, resetForm, setIsOpen, isOpen } = usePeopleFormDialog(type, id)
+  const { isEdit, form, handleSubmit, resetForm, handleOpenChange, isOpen } = usePeopleFormDialog(type, id)
 
   return (
-    <Dialog open={isOpen} onOpenChange={(change) => { console.log(change); setIsOpen(change) }}>
+    <Dialog open={isOpen} onOpenChange={(change) => { handleOpenChange(change) }}>
       <Form {...form}>
         <form onSubmit={handleSubmit}>
           {isEdit && (

@@ -1,5 +1,6 @@
 services:
   register-db:
+    container_name: register-db-stefanini-test
     image: postgres:17.5
     restart: always
     env_file:
@@ -22,6 +23,7 @@ services:
       - register-network
 
   register-service:
+    container_name: register-service-stefanini-test
     build:
       context: ./register-service
       dockerfile: Dockerfile
@@ -44,6 +46,7 @@ services:
       sh -c "npx prisma migrate deploy && npm run start:prod"
 
   register-web:
+    container_name: register-web-stefanini-test
     build:
       context: ./register-web
       dockerfile: Dockerfile
@@ -54,7 +57,7 @@ services:
       - "${VITE_PORT}:${VITE_PORT}"
     environment:
       VITE_PORT: ${VITE_PORT}
-      VITE_BASE_URL: http://register-service:${PORT}
+      VITE_BASE_URL: http://localhost:${PORT}
       VITE_BASE_URL_PREFIX_V1: ${VITE_BASE_URL_PREFIX_V1}
     depends_on:
       - register-service

@@ -9,8 +9,6 @@ export interface GenericPaginationProps {
 
 
 export function useDefaultPagination() {
-
-
   return { getPageNumbers, getTotalPages }
 }
 

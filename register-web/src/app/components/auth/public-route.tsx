@@ -19,7 +19,6 @@ export function PublicRoute({ children }: PublicRouteProps) {
   }
 
   if (isAuthenticated) {
-    // Se já está autenticado, redireciona para a página principal
     return <Navigate to={routes.private.people} replace />
   }
 

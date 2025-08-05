@@ -1,7 +1,7 @@
 import { PeopleFormDialogSchema, type PeopleFormDialogSchemaType } from "./people-form-dialog-schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { useCreatePerson, usePerson, useUpdatePerson } from "../../../../../../app/services/people.service"
+import { useForm, type UseFormReturn } from "react-hook-form"
+import { useCreatePerson, usePerson, useUpdatePerson, type Person } from "../../../../../../app/services/people.service"
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 
@@ -10,49 +10,41 @@ export interface PeopleFormDialogProps {
   type: PeopleFormDialogType,
   id?: string
 }
-export function usePeopleFormDialog(type: PeopleFormDialogType, id?: string) {
+export interface UsePeopleFormDialogReturn {
+  isEdit: boolean;
+  form: UseFormReturn<PeopleFormDialogSchemaType>;
+  handleSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+  resetForm: () => void;
+  handleOpenChange: (open: boolean) => void;
+  isOpen: boolean;
+}
+
+export function usePeopleFormDialog(type: PeopleFormDialogType, id?: string): UsePeopleFormDialogReturn {
   const [isOpen, setIsOpen] = useState(false)
+  const handleOpenChange = (open: boolean) => setIsOpen(open)
+
   const isEdit = type === "edit"
   const form = useForm<PeopleFormDialogSchemaType>({
     resolver: zodResolver(PeopleFormDialogSchema),
-    defaultValues: {
-      name: "",
-      cpf: "",
-      gender: "male",
-      email: "",
-      birthday: "",
-      placeBirth: "",
-      nationality: "",
-    }
+    defaultValues: getDefaultValues(undefined)
   })
 
   const { data: personData } = usePerson(id)
 
   useEffect(() => {
-    if (isEdit && personData) {
-      form.reset({
-        name: personData.name ?? "",
-        cpf: personData.cpf ?? "",
-        gender: personData.gender ?? "male",
-        email: personData.email ?? "",
-        birthday: personData.birthday ?? "",
-        placeBirth: personData.placeBirth ?? "",
-        nationality: personData.nationality ?? "",
-      })
-    }
+    if (isEdit && personData) form.reset(getDefaultValues(personData))
   }, [isEdit, personData, form])
 
   const createPersonMutation = useCreatePerson();
   const updatePersonMutation = useUpdatePerson();
 
   const handleSubmit = form.handleSubmit(async (data) => {
-    console.log(data)
     if (isEdit && id) {
       await updatePersonMutation.mutateAsync({ id: id, ...data }, {
         onSuccess: (response) => {
           toast.success(response.message)
           form.reset();
-          setIsOpen(false)
+          handleOpenChange(false)
         }
       });
     } else {
@@ -60,25 +52,28 @@ export function usePeopleFormDialog(type: PeopleFormDialogType, id?: string) {
         onSuccess: (response) => {
           toast.success(response.message)
           form.reset();
-          setIsOpen(false)
+          handleOpenChange(false)
         }
       });
     }
     form.reset();
-    setIsOpen(false)
+    handleOpenChange(false)
 
   });
 
-  const resetForm = () => {
-    form.reset()
-  }
+  const resetForm = () => form.reset()
 
+  return { isEdit, form, handleSubmit, resetForm, handleOpenChange, isOpen }
+}
+
+function getDefaultValues(personData: Person | undefined): PeopleFormDialogSchemaType {
   return {
-    isEdit,
-    form,
-    handleSubmit,
-    resetForm,
-    setIsOpen,
-    isOpen
+    name: personData?.name ?? "",
+    cpf: personData?.cpf ?? "",
+    gender: personData?.gender ?? "male",
+    email: personData?.email ?? "",
+    birthday: personData?.birthday ?? "",
+    placeBirth: personData?.placeBirth ?? "",
+    nationality: personData?.nationality ?? "",
   }
 }

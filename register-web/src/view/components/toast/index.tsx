@@ -1,23 +1,21 @@
 import { Bounce, ToastContainer } from 'react-toastify'
 import { useTheme } from '@context/theme/theme-provider'
 
-export function DefaultToastContainer(props: React.ComponentProps<typeof ToastContainer>) {
-  const { theme } = useTheme()
-
-  let toastTheme: 'light' | 'dark' | 'colored' = 'light'
-  console.log('theme', theme)
-  if (theme === 'dark') {
-    toastTheme = 'dark'
-  } else if (theme === 'light') {
-    toastTheme = 'light'
-  } else if (theme === 'system') {
+const themeMap = {
+  light: (): string => 'light',
+  dark: (): string => 'dark',
+  system: (): string => {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      toastTheme = 'dark'
+      return 'dark'
     } else {
-      toastTheme = 'light'
+      return 'light'
     }
   }
-  console.log('toastTheme', toastTheme)
+}
+
+export function DefaultToastContainer(props: React.ComponentProps<typeof ToastContainer>) {
+  const { theme } = useTheme()
+  const toastTheme = themeMap[theme as keyof typeof themeMap]()
 
   return (
     <ToastContainer
