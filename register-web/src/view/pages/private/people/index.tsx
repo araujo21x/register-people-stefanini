@@ -5,15 +5,15 @@ import { usePeople } from "./use-people";
 import { PeopleFormDialog } from "./components/people-form-dialog";
 import type { Person } from "src/app/services/people.service";
 import { DefaultPagination } from "@components/pagination";
-import { DefaultLoading } from "@components/loading";
+// import { DefaultLoading } from "@components/loading";
 
 
 export function People() {
-  const { data, page, handleSetPage, isLoading } = usePeople()
+  const { data, page, handleSetPage } = usePeople()
 
   return (
     <div className="flex flex-col h-full p-2 justify-between">
-      <DefaultLoading isLoading={isLoading} />
+      {/* <DefaultLoading isLoading={isLoading} /> */}
       <div className="py-2 flex justify-end">
         <PeopleFormDialog type="register" />
       </div>

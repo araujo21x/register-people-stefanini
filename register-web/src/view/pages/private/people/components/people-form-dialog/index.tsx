@@ -16,14 +16,14 @@ import { Edit2 } from "lucide-react"
 import { DefaultSelect } from "@components/select/default-select"
 import { DefaultDatePicker } from "@components/date-picker"
 import { CPFInput } from "@components/inputs/cpf"
-import { DefaultLoading } from "@components/loading"
+// import { DefaultLoading } from "@components/loading"
 
 export function PeopleFormDialog({ type, id }: PeopleFormDialogProps) {
-  const { isEdit, form, handleSubmit, resetForm, handleOpenChange, isOpen, isLoading } = usePeopleFormDialog(type, id)
+  const { isEdit, form, handleSubmit, resetForm, handleOpenChange, isOpen } = usePeopleFormDialog(type, id)
 
   return (
     <Dialog open={isOpen} onOpenChange={(change) => { handleOpenChange(change) }}>
-      <DefaultLoading isLoading={isLoading} />
+      {/* <DefaultLoading isLoading={isLoading} /> */}
       <Form {...form}>
         <form onSubmit={handleSubmit}>
           {isEdit && (

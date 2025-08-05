@@ -5,7 +5,7 @@ import { Form } from "@components/shadcn/components/ui/form"
 import { useLogin } from "./use-login"
 import { routes } from "../../../../../../app/Router/routes"
 import { DefaultButton } from "@components/button/default-button"
-import { DefaultLoading } from "@components/loading"
+// import { DefaultLoading } from "@components/loading"
 
 export function LoginForm({
   className,
@@ -15,7 +15,7 @@ export function LoginForm({
 
   return (
     <div className={cn("flex flex-col gap-6 w-100", className)} {...props}>
-      <DefaultLoading isLoading={isLoading} />
+      {/* <DefaultLoading isLoading={isLoading} /> */}
       <Card>
 
         <CardHeader className="text-center">
