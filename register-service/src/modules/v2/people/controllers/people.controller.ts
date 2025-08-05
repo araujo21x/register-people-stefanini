@@ -2,19 +2,19 @@ import { Controller, Post, Body, UseGuards, Get, Query, Param, Delete, Patch } f
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from '@module/v2/auth/guards/jwt-auth.guard';
 import { StandardApiResponses } from '@shared/decorators/api-responses.decorator';
-import { PersonRegisterDto } from '../dto/request/person-register.dto';
+import { PersonRegisterV2Dto } from '../dto/request/person-register-v2.dto';
 import { PersonRegisterService } from '../services/person-register.service';
 import { GetPayload } from '@shared/decorators/get-payload.decorator';
 import { User } from 'generated/prisma';
-import { PeopleIndexDto } from '../dto/request/people-index.dto';
+import { PeopleIndexV2Dto } from '../dto/request/people-index-v2.dto';
 import { PeopleIndexService } from '../services/people-index.service';
-import { PersonRegisterResponseDto } from '../dto/response/person-register-response.dto';
-import { PeopleIndexResponseDto } from '../dto/response/people-index-response.dto';
-import { PersonShowResponseDto } from '../dto/response/person-show-response.dto';
+import { PersonRegisterResponseV2Dto } from '../dto/response/person-register-response-v2.dto';
+import { PeopleIndexV2ResponseDto } from '../dto/response/people-index-response-v2.dto';
+import { PersonShowResponseV2Dto } from '../dto/response/person-show-response-v2.dto';
 import { PersonShowService } from '../services/person-show.service';
 import { PersonDeleteService } from '../services/person-delete.service';
-import { PersonUpdateDto } from '../dto/request/person-update.dto';
-import { PersonUpdateResponseDto } from '../dto/response/person-update-response.dto';
+import { PersonUpdateV2Dto } from '../dto/request/person-update-v2.dto';
+import { PersonUpdateResponseV2Dto } from '../dto/response/person-update-response-v2.dto';
 import { PersonUpdateService } from '../services/person-update.service';
 
 @ApiTags('PessoasV2')
@@ -32,9 +32,9 @@ export class PeopleController {
 
   @Post()
   @ApiOperation({ summary: 'Criar uma nova pessoa' })
-  @ApiResponse({ status: 201, description: 'Pessoa criada com sucesso.', type: PersonRegisterResponseDto })
+  @ApiResponse({ status: 201, description: 'Pessoa criada com sucesso.', type: PersonRegisterResponseV2Dto })
   @StandardApiResponses()
-  async register(@GetPayload() user: User, @Body() body: PersonRegisterDto): Promise<PersonRegisterResponseDto> {
+  async register(@GetPayload() user: User, @Body() body: PersonRegisterV2Dto): Promise<PersonRegisterResponseV2Dto> {
     const person = await this.peopleRegisterService.execute(body, user);
 
     return { message: 'Pessoa criada com sucesso.', person };
@@ -42,29 +42,29 @@ export class PeopleController {
 
   @Get()
   @ApiOperation({ summary: 'Listar todas as pessoas' })
-  @ApiResponse({ status: 200, description: 'Pessoas listadas com sucesso.', type: PeopleIndexResponseDto })
+  @ApiResponse({ status: 200, description: 'Pessoas listadas com sucesso.', type: PeopleIndexV2ResponseDto })
   @StandardApiResponses()
-  async index(@GetPayload() user: User, @Query() query: PeopleIndexDto): Promise<PeopleIndexResponseDto> {
+  async index(@GetPayload() user: User, @Query() query: PeopleIndexV2Dto): Promise<PeopleIndexV2ResponseDto> {
     return await this.peopleIndexService.execute(query, user);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Buscar uma pessoa pelo ID' })
-  @ApiResponse({ status: 200, description: 'Pessoa encontrada com sucesso.', type: PersonShowResponseDto })
+  @ApiResponse({ status: 200, description: 'Pessoa encontrada com sucesso.', type: PersonShowResponseV2Dto })
   @StandardApiResponses()
-  async show(@GetPayload() user: User, @Param('id') id: string): Promise<PersonShowResponseDto> {
+  async show(@GetPayload() user: User, @Param('id') id: string): Promise<PersonShowResponseV2Dto> {
     return await this.personShowService.execute(id, user);
   }
 
   @Patch(':id')
   @ApiOperation({ summary: 'Atualizar dados de uma pessoa' })
-  @ApiResponse({ status: 200, description: 'Pessoa atualizada com sucesso.', type: PersonUpdateResponseDto })
+  @ApiResponse({ status: 200, description: 'Pessoa atualizada com sucesso.', type: PersonUpdateResponseV2Dto })
   @StandardApiResponses()
   async update(
     @GetPayload() user: User,
     @Param('id') id: string,
-    @Body() body: PersonUpdateDto,
-  ): Promise<PersonUpdateResponseDto> {
+    @Body() body: PersonUpdateV2Dto,
+  ): Promise<PersonUpdateResponseV2Dto> {
     const person = await this.personUpdateService.execute(id, body, user);
 
     return { message: 'Pessoa atualizada com sucesso.', person };

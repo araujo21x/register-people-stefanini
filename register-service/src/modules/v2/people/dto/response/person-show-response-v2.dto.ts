@@ -3,7 +3,7 @@ import { Gender } from 'generated/prisma';
 import { UserResponseDto } from '../../../../../shared/dto/response/user-response.dto';
 import { AddressResponseDto } from '../../../../../shared/dto/response/address-response.dto';
 
-export class PersonUpdateResponse {
+export class PersonShowResponseV2Dto {
   @ApiProperty({ example: '550e8400-e29b-41d4-a716-446655440000', description: 'ID da pessoa' })
   id: string;
 
@@ -42,12 +42,4 @@ export class PersonUpdateResponse {
 
   @ApiProperty({ type: AddressResponseDto, description: 'Endereço da pessoa', required: false })
   Address?: AddressResponseDto | null;
-}
-
-export class PersonUpdateResponseDto {
-  @ApiProperty({ type: PersonUpdateResponse })
-  person: PersonUpdateResponse;
-
-  @ApiProperty({ example: 'Pessoa atualizada com sucesso.', description: 'Mensagem de sucesso' })
-  message: string;
-}
+} 

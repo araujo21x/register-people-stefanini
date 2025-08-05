@@ -20,7 +20,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/v1/documentation', app, document);
+  SwaggerModule.setup('api/documentation', app, document);
 
   app.use(compression());
   app.useGlobalFilters();

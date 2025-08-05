@@ -31,9 +31,10 @@ services:
     env_file:
       - .env
     environment:
-      NODE_ENV: ${NODE_ENV}
-      JWT_SECRET: ${JWT_SECRET}
       PORT: ${PORT}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+      NODE_ENV: ${NODE_ENV}
       DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@register-db:5432/${POSTGRES_DB}?schema=public"
     depends_on:
       - register-db
@@ -46,9 +47,15 @@ services:
     build:
       context: ./register-web
       dockerfile: Dockerfile
+    env_file:
+      - .env
     restart: always
     ports:
-      - "3000:3000"
+      - "${VITE_PORT}:${VITE_PORT}"
+    environment:
+      VITE_PORT: ${VITE_PORT}
+      VITE_BASE_URL: http://register-service:${PORT}
+      VITE_BASE_URL_PREFIX_V1: ${VITE_BASE_URL_PREFIX_V1}
     depends_on:
       - register-service
     networks:

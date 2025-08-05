@@ -8,10 +8,11 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     open: true,
-    port: 3000,
+    port: Number(process.env.VITE_PORT) || 3000,
   },
   preview: {
-    port: 3000,
+    open: true,
+    port: Number(process.env.VITE_PORT) || 3000,
   },
   resolve: {
     alias: {

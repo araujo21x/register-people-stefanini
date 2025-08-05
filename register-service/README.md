@@ -1,98 +1,208 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Register Service - Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este é o serviço backend do projeto Register People Stefanini, desenvolvido com NestJS.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📋 Descrição
 
-## Description
+O Register Service é uma API REST desenvolvida em NestJS que fornece funcionalidades de autenticação e gerenciamento de pessoas. O projeto utiliza:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **NestJS** - Framework para construção de aplicações server-side
+- **Prisma** - ORM para banco de dados
+- **PostgreSQL** - Banco de dados
+- **JWT** - Autenticação
+- **Docker** - Containerização
 
-## Project setup
+## 🚀 Como executar o projeto
+
+### Pré-requisitos
+
+- Node.js (versão 22 ou superior)
+- npm
+- PostgreSQL (se executando localmente)
+- Docker e Docker Compose (opcional)
+
+### Instalação e execução local
 
 ```bash
-$ npm install
+# Instalar dependências
+npm install
+
+# Executar em modo desenvolvimento
+npm run start:dev
+
+# Executar em modo produção
+npm run start:prod
+
+# Executar em modo debug
+npm run start:debug
 ```
 
-## Compile and run the project
+### Comandos disponíveis
 
 ```bash
-# development
-$ npm run start
+# Desenvolvimento
+npm run start:dev      # Executa em modo watch
+npm run start:debug    # Executa em modo debug
 
-# watch mode
-$ npm run start:dev
+# Produção
+npm run start:prod     # Executa em modo produção
+npm run start          # Executa normalmente
 
-# production mode
-$ npm run start:prod
+# Build
+npm run build          # Compila o projeto
+
+# Linting e formatação
+npm run lint           # Executa ESLint
+npm run format         # Formata o código com Prettier
 ```
 
-## Run tests
+## 🔧 Variáveis de Ambiente
+
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+
+```env
+# Configurações do Banco de Dados
+POSTGRES_DB=register_db
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=sua_senha_aqui
+DATABASE_URL=postgresql://postgres:sua_senha_aqui@localhost:5432/register_db?schema=public
+
+# Configurações da Aplicação
+PORT=9000
+NODE_ENV=development
+JWT_SECRET=seu_secret_aqui
+JWT_EXPIRES_IN=7d
+
+# Configurações de Segurança
+JWT_SECRET=seu_jwt_secret_aqui
+```
+
+### Explicação das variáveis:
+
+- **POSTGRES_DB**: Nome do banco de dados PostgreSQL
+- **POSTGRES_USER**: Usuário do banco de dados
+- **POSTGRES_PASSWORD**: Senha do banco de dados
+- **DATABASE_URL**: URL de conexão com o banco de dados
+- **PORT**: Porta onde a aplicação será executada
+- **NODE_ENV**: Ambiente de execução (development, production, test)
+- **JWT_SECRET**: Chave secreta para assinatura dos tokens JWT
+- **JWT_EXPIRES_IN**: duração do token
+
+## 🐳 Docker
+
+### Docker Compose do Backend (este diretório)
+
+Este diretório contém um `docker-compose.yml` que executa apenas o backend e o banco de dados:
 
 ```bash
-# unit tests
-$ npm run test
+# Executar apenas o backend e banco de dados
+docker-compose up -d
 
-# e2e tests
-$ npm run test:e2e
+# Executar em modo detached (background)
+docker-compose up -d
 
-# test coverage
-$ npm run test:cov
+# Parar os containers
+docker-compose down
+
+# Reconstruir as imagens
+docker-compose up --build -d
+
+# Visualizar logs
+docker-compose logs -f register-service
 ```
 
-## Deployment
+### Docker Compose Completo (raiz do projeto)
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+**⚠️ Importante**: Na raiz do projeto existe um `docker-compose.yml` completo que executa:
+- Backend (register-service)
+- Frontend (register-web) 
+- Banco de dados (register-db)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Para executar o projeto completo:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# Na raiz do projeto
+docker-compose up -d
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Comandos Docker úteis
 
-## Resources
+```bash
+# Construir imagem do backend
+docker build -t register-service .
 
-Check out a few resources that may come in handy when working with NestJS:
+# Executar container do backend
+docker run -p 9000:9000 --env-file .env register-service
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Acessar container em execução
+docker exec -it register-service sh
 
-## Support
+# Visualizar logs
+docker logs register-service
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 📁 Estrutura do Projeto
 
-## Stay in touch
+```
+register-service/
+├── src/
+│   ├── modules/
+│   │   ├── v1/           # API v1
+│   │   │   ├── auth/     # Autenticação
+│   │   │   ├── people/   # Gerenciamento de pessoas
+│   │   │   └── health/   # Health check
+│   │   └── v2/           # API v2 (versão mais recente)
+│   ├── shared/           # Código compartilhado
+│   ├── database/         # Configurações do banco
+│   └── main.ts           # Ponto de entrada
+├── prisma/               # Schema e migrações do banco
+├── docker-compose.yml    # Docker do backend
+└── Dockerfile           # Imagem Docker
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 🔗 Endpoints da API
 
-## License
+A API está disponível em duas versões:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- **v1**: `/api/v1`
+- **v2**: `/api/v2`
+
+### Principais endpoints:
+
+- `POST /api/v2/auth/login` - Login
+- `POST /api/v2/auth/register` - Registro de usuário
+- `GET /api/v2/people` - Listar pessoas
+- `POST /api/v2/people` - Criar pessoa
+- `GET /api/v2/people/:id` - Buscar pessoa
+- `PUT /api/v2/people/:id` - Atualizar pessoa
+- `DELETE /api/v2/people/:id` - Deletar pessoa
+
+## 📚 Documentação da API
+
+A documentação Swagger está disponível em:
+- **link**: `http://localhost:9000/api/documentation`
+
+## 🛠️ Desenvolvimento
+
+### Migrações do Banco
+
+```bash
+# Gerar migração
+npx prisma migrate dev --name nome_da_migracao
+
+# Aplicar migrações
+npx prisma migrate deploy
+
+# Reset do banco (cuidado!)
+npx prisma migrate reset
+
+# Gerar cliente Prisma
+npx prisma generate
+```
+
+### Studio do Prisma
+
+```bash
+# Abrir interface visual do banco
+npx prisma studio
+```

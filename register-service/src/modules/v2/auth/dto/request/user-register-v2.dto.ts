@@ -2,7 +2,7 @@ import { Match } from '@shared/validators/IsMath.decorator';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UserRegisterDto {
+export class UserRegisterV2Dto {
   @ApiProperty({ example: 'João', description: 'Nome do usuário', minLength: 3 })
   @IsString({ message: 'Nome inválido' })
   @IsNotEmpty({ message: 'Nome é obrigatório' })
@@ -33,4 +33,4 @@ export class UserRegisterDto {
   @MinLength(8, { message: 'Senha deve ter no mínimo 8 caracteres' })
   @Match('password', { message: 'As senhas não coincidem' })
   confirmPassword?: string;
-}
+} 

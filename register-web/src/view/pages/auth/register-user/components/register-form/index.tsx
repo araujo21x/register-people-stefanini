@@ -50,7 +50,7 @@ export function RegisterForm({
 
                   <Button
                     type="submit"
-                    className="w-full transition-colors duration-200 hover:bg-primary/90 active:scale-95 active:bg-primary/80"
+                    className="w-full transition-colors duration-200 active:scale-95"
                     disabled={isLoading}
                   >
                     {isLoading ? "Registrando..." : "Registrar"}

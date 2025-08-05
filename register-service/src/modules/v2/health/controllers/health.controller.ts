@@ -1,7 +1,7 @@
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Controller, Get } from '@nestjs/common';
 import { HealthService } from '../services/health.service';
-import { HealthResponseDto } from '../dto/response/health-response.dto';
+import { HealthResponseV2Dto } from '../dto/response/health-response-v2.dto';
 import { StandardApiResponses } from '@shared/decorators/api-responses.decorator';
 
 @ApiTags('HealthV2')
@@ -14,10 +14,10 @@ export class HealthController {
   @ApiResponse({
     status: 200,
     description: 'Status do serviço de saúde retornado com sucesso.',
-    type: HealthResponseDto,
+    type: HealthResponseV2Dto,
   })
   @StandardApiResponses()
-  async health(): Promise<HealthResponseDto> {
+  async health(): Promise<HealthResponseV2Dto> {
     return await this.healthService.execute();
   }
 }

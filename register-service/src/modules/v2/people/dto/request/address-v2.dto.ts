@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsOptional, MaxLength, MinLength, Matches } from 'class-validator';
 
-export class AddressDto {
+export class AddressV2Dto {
   @ApiProperty({ example: 'Rua das Flores', description: 'Nome da rua', maxLength: 225 })
   @IsString({ message: 'Rua inválida' })
   @IsNotEmpty({ message: 'Rua é obrigatória' })
@@ -52,4 +52,4 @@ export class AddressDto {
   @MaxLength(8, { message: 'CEP deve ter 8 dígitos' })
   @Matches(/^\d{8}$/, { message: 'CEP deve conter apenas 8 dígitos numéricos' })
   zipCode: string;
-}
+} 

@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, User } from 'generated/prisma';
 import { PrismaService } from '@prisma/prisma.service';
-import { PersonShowResponseDto } from '../dto/response/person-show-response.dto';
+import { PersonShowResponseV2Dto } from '../dto/response/person-show-response-v2.dto';
 import { DataNotFoundError } from '@shared/filter/error/exceptions/data-not-found.error';
 
 @Injectable()
 export class PersonShowService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute(id: string, user: User): Promise<PersonShowResponseDto> {
+  async execute(id: string, user: User): Promise<PersonShowResponseV2Dto> {
     const where = this.buildQuery(id, user);
 
     const person = await this.prisma.people.findFirst({ where, include: { user: true, address: true } });

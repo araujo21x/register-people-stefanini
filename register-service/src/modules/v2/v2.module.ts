@@ -4,6 +4,6 @@ import { AuthModule } from './auth/auth.module';
 import { HealthModule } from './health/health.module';
 
 @Module({
-  imports: [PeopleModule, AuthModule, HealthModule],
+  imports: [HealthModule, AuthModule, PeopleModule],
 })
 export class V2Module {}

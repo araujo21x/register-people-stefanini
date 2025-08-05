@@ -50,7 +50,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     className={`font-medium flex items-center gap-2 px-2 py-1 rounded ${
                       selectedNav === item.title
                         ? "bg-primary text-primary-foreground"
-                        : "hover:bg-muted"
+                        : "hover:bg-accent hover:text-accent-foreground"
                     }`}
                     onClick={() => setSelectedNav(item.title)}
                   >
@@ -66,7 +66,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <DefaultButton
           variant="outline"
           onClick={() => logout()}
-          className="text-red-600 hover:text-red-700 flex items-center gap-2"
+          className="text-red-600 hover:text-white hover:bg-red-500 flex items-center gap-2"
         >
           <LogOut className="size-4" />
           Sair

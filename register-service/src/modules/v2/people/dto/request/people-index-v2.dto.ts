@@ -3,7 +3,7 @@ import { BasicIndexDto } from '@shared/dto/request/basic-index.dto';
 import { IsOptional, IsString, IsEnum, IsDateString, MaxLength, MinLength } from 'class-validator';
 import { Gender } from 'generated/prisma';
 
-export class PeopleIndexDto extends BasicIndexDto {
+export class PeopleIndexV2Dto extends BasicIndexDto {
   @ApiPropertyOptional({ example: 'João', description: 'Filtrar por nome (parcial ou completo)' })
   @IsOptional()
   @IsString({ message: 'Nome deve ser uma string' })
@@ -44,4 +44,4 @@ export class PeopleIndexDto extends BasicIndexDto {
   @MinLength(1, { message: 'CPF deve ter pelo menos 1 caractere' })
   @MaxLength(11, { message: 'CPF deve ter no máximo 11 caracteres' })
   cpf?: string;
-}
+} 

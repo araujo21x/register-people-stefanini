@@ -25,7 +25,7 @@ export function DefaultAlertDialog({ children, title, description, onConfirm, co
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{cancelText}</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm} className={type === "danger" ? "bg-red-500 hover:bg-red-600" : ""}>{confirmText}</AlertDialogAction>
+          <AlertDialogAction onClick={onConfirm} className={type === "danger" ? "bg-destructive hover:bg-destructive/90" : ""}>{confirmText}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

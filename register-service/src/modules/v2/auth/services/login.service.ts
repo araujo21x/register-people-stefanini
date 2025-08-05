@@ -1,18 +1,18 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { LoginDto } from '../dto/request/login.dto';
+import { LoginV2Dto } from '../dto/request/login-v2.dto';
 import { PrismaService } from '@prisma/prisma.service';
 import { userSelect } from '@shared/selects/user.selects';
 import { DataNotFoundError } from '@shared/filter/error/exceptions/data-not-found.error';
 import { AppError } from '@shared/filter/error/exceptions/app.error';
 import * as bcrypt from 'bcrypt';
 import { getAccessToken } from '../utils/getAccessToken';
-import { LoginResponseDto } from '../dto/response/login-response.dto';
+import { LoginResponseV2Dto } from '../dto/response/login-response-v2.dto';
 
 @Injectable()
 export class LoginService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  public async execute(body: LoginDto): Promise<LoginResponseDto> {
+  public async execute(body: LoginV2Dto): Promise<LoginResponseV2Dto> {
     const user = await this.prismaService.user.findFirst({ where: { email: body.email }, select: userSelect.login });
     if (!user) throw new DataNotFoundError('Usuário');
 

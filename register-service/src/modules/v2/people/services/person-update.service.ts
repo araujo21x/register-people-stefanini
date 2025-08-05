@@ -3,16 +3,16 @@ import { Prisma, User } from 'generated/prisma';
 import { PrismaService } from '@prisma/prisma.service';
 import { AppError } from '@shared/filter/error/exceptions/app.error';
 
-import { PersonUpdateResponse } from '../dto/response/person-update-response.dto';
-import { PersonUpdateDto } from '../dto/request/person-update.dto';
+import { PersonUpdateV2Response } from '../dto/response/person-update-response-v2.dto';
+import { PersonUpdateV2Dto } from '../dto/request/person-update-v2.dto';
 import { DataNotFoundError } from '@shared/filter/error/exceptions/data-not-found.error';
-import { AddressDto } from '../dto/request/address.dto';
+import { AddressV2Dto } from '../dto/request/address-v2.dto';
 
 @Injectable()
 export class PersonUpdateService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute(id: string, body: PersonUpdateDto, user: User): Promise<PersonUpdateResponse> {
+  async execute(id: string, body: PersonUpdateV2Dto, user: User): Promise<PersonUpdateV2Response> {
     await this.validatePerson(id, body, user);
 
     const person = await this.prisma.people.findFirst({ where: { id, userId: user.id } });
@@ -27,7 +27,7 @@ export class PersonUpdateService {
     return personUpdated;
   }
 
-  private async validatePerson(id: string, body: PersonUpdateDto, user: User): Promise<void> {
+  private async validatePerson(id: string, body: PersonUpdateV2Dto, user: User): Promise<void> {
     if (!body.cpf && !body.name && !body.birthday) return;
 
     const where: Prisma.PeopleWhereInput = { id: { not: id }, userId: user.id };
@@ -41,7 +41,7 @@ export class PersonUpdateService {
     if (person) throw new AppError('Pessoa já cadastrada', HttpStatus.BAD_REQUEST);
   }
 
-  private buildPerson(body: PersonUpdateDto): Prisma.PeopleUpdateInput {
+  private buildPerson(body: PersonUpdateV2Dto): Prisma.PeopleUpdateInput {
     const build: Prisma.PeopleUpdateInput = {} as Prisma.PeopleUpdateInput;
 
     if (body.name) build.name = body.name;
@@ -56,7 +56,7 @@ export class PersonUpdateService {
     return build;
   }
 
-  private buildAddress(address: AddressDto) {
+  private buildAddress(address: AddressV2Dto) {
     return {
       upsert: {
         create: {

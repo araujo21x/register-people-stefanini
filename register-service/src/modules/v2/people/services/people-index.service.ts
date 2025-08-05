@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, User } from 'generated/prisma';
 import { PrismaService } from '@prisma/prisma.service';
-import { PeopleIndexDto } from '../dto/request/people-index.dto';
-import { PeopleIndexResponseDto } from '../dto/response/people-index-response.dto';
+import { PeopleIndexV2Dto } from '../dto/request/people-index-v2.dto';
+import { PeopleIndexV2ResponseDto } from '../dto/response/people-index-response-v2.dto';
 import { handlerPageAndOrder } from '@shared/helpers/handlerPaginationAndOrder';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class PeopleIndexService {
 
   private readonly KEYS_TO_ORDER: string[] = ['name', 'gender', 'email', 'birthday', 'cpf', 'createdAt', 'updatedAt'];
 
-  async execute(query: PeopleIndexDto, user: User): Promise<PeopleIndexResponseDto> {
+  async execute(query: PeopleIndexV2Dto, user: User): Promise<PeopleIndexV2ResponseDto> {
     const where = this.buildQuery(query, user);
     const pageAndOrder = handlerPageAndOrder(query, this.KEYS_TO_ORDER);
 
@@ -23,7 +23,7 @@ export class PeopleIndexService {
     return { people, count };
   }
 
-  private buildQuery(body: PeopleIndexDto, user: User): Prisma.PeopleWhereInput {
+  private buildQuery(body: PeopleIndexV2Dto, user: User): Prisma.PeopleWhereInput {
     const where: Prisma.PeopleWhereInput = {};
 
     if (body.name) where.name = { contains: body.name, mode: 'insensitive' };

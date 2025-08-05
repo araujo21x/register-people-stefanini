@@ -2,9 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength, IsDateString, IsEnum, MaxLength } from 'class-validator';
 import { IsCPF } from '@shared/validators/IsCPF.decorator';
 import { Gender } from 'generated/prisma';
-import { AddressDto } from './address.dto';
+import { AddressV2Dto } from './address-v2.dto';
 
-export class PersonRegisterDto {
+export class PersonRegisterV2Dto {
   @ApiProperty({ example: 'João Silva', description: 'Nome completo da pessoa', minLength: 3 })
   @IsString({ message: 'Nome inválido' })
   @IsNotEmpty({ message: 'Nome é obrigatório' })
@@ -44,7 +44,7 @@ export class PersonRegisterDto {
   @IsCPF({ message: 'CPF deve ter formato válido' })
   cpf: string;
 
-  @ApiProperty({ type: AddressDto, description: 'Endereço da pessoa', required: false })
+  @ApiProperty({ type: AddressV2Dto, description: 'Endereço da pessoa', required: false })
   @IsOptional()
-  address?: AddressDto;
-}
+  address?: AddressV2Dto;
+} 
