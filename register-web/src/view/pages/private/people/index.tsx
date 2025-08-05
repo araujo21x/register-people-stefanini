@@ -11,11 +11,11 @@ export function People() {
   const { data, page, setPage } = usePeople()
 
   return (
-    <div className="flex flex-col h-full p-3 justify-between">
+    <div className="flex flex-col h-full p-2 justify-between">
       <div className="py-2 flex justify-end">
         <PeopleFormDialog type="register" />
       </div>
-      <div className="flex-1 my-2 overflow-auto max-h-[77vh]">
+      <div className="flex-1 my-2 overflow-auto max-h-[76vh]">
         <DataTable<Person, Person> columns={columns} data={data?.people || []} />
       </div>
       <div className="py-2">

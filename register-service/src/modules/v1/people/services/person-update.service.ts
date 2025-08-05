@@ -11,7 +11,7 @@ export class PersonUpdateService {
   constructor(private readonly prisma: PrismaService) {}
 
   async execute(id: string, body: PersonUpdateDto, user: User): Promise<PersonUpdateResponse> {
-    await this.validatePerson(id, body, user);
+    // await this.validatePerson(id, body, user);
 
     const person = await this.prisma.people.findFirst({ where: { id, userId: user.id } });
     if (!person) throw new DataNotFoundError('Pessoa');

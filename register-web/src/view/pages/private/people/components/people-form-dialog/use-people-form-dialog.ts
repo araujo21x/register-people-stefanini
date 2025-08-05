@@ -46,7 +46,7 @@ export function usePeopleFormDialog(type: PeopleFormDialogType, id?: string) {
   const updatePersonMutation = useUpdatePerson();
 
   const handleSubmit = form.handleSubmit(async (data) => {
-
+    console.log(data)
     if (isEdit && id) {
       await updatePersonMutation.mutateAsync({ id: id, ...data }, {
         onSuccess: (response) => {

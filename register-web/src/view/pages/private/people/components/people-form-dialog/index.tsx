@@ -13,7 +13,9 @@ import {
 import { Form } from "@components/shadcn/components/ui/form"
 import { usePeopleFormDialog, type PeopleFormDialogProps } from "./use-people-form-dialog"
 import { Edit2 } from "lucide-react"
-
+import { DefaultSelect } from "@components/select/default-select"
+import { DefaultDatePicker } from "@components/date-picker"
+import { CPFInput } from "@components/inputs/cpf"
 
 export function PeopleFormDialog({ type, id }: PeopleFormDialogProps) {
   const { isEdit, form, handleSubmit, resetForm, setIsOpen, isOpen } = usePeopleFormDialog(type, id)
@@ -48,14 +50,34 @@ export function PeopleFormDialog({ type, id }: PeopleFormDialogProps) {
                   : "Preencha os dados para cadastrar uma nova pessoa."}
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4">
+            <div className="grid gap-2">
               <TextInput control={form.control} label="Nome" name="name" type="text" placeholder="Nome" required />
-              <TextInput control={form.control} label="Gênero" name="gender" type="text" placeholder="Gênero"/>
+              <div className="flex flex-row gap-2">
+                <div className="w-3/2">
+                  <DefaultSelect
+                    options={[{ value: "male", label: "Masculino" }, { value: "female", label: "Feminino" }]}
+                    label="Gênero"
+                    name="gender"
+                    placeholder="Gênero"
+                    control={form.control}
+                    className="w-full"
+                  />
+                </div>
+                <div className="w-1/2">
+                  <DefaultDatePicker
+                    control={form.control}
+                    label="Data de Nascimento"
+                    name="birthday"
+                    placeholder="Data de Nascimento"
+                    className="w-full"
+                    required
+                  />
+                </div>
+              </div>
               <TextInput control={form.control} label="Email" name="email" type="email" placeholder="Email" />
-              <TextInput control={form.control} label="Data de Nascimento" name="birthday" type="text" placeholder="Data de Nascimento" required />
               <TextInput control={form.control} label="Local de Nascimento" name="placeBirth" type="text" placeholder="Local de Nascimento" />
               <TextInput control={form.control} label="Nacionalidade" name="nationality" type="text" placeholder="Nacionalidade" />
-              <TextInput control={form.control} label="CPF" name="cpf" type="text" placeholder="CPF" required/>
+              <CPFInput control={form.control} label="CPF" name="cpf" placeholder="CPF" required />
             </div>
             <DialogFooter>
               <DialogClose asChild>
