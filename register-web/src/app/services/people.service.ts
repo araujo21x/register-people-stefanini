@@ -1,144 +1,133 @@
-// import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-// import { api } from '../libs/axios'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { api } from '../libs/axios'
 
-// // Tipos para pessoas
-// export interface Person {
-//   id: string
-//   name: string
-//   email: string
-//   cpf: string
-//   gender: 'MALE' | 'FEMALE' | 'OTHER'
-//   birthDate: string
-//   address: {
-//     street: string
-//     number: string
-//     complement?: string
-//     neighborhood: string
-//     city: string
-//     state: string
-//     zipCode: string
-//   }
-//   createdAt: string
-//   updatedAt: string
-// }
+// Tipos para pessoas
+export interface Person {
+  id: string
+  name: string
+  email?: string
+  cpf: string
+  gender?: 'male' | 'female'
+  birthday: string
+  placeBirth?: string
+  nationality?: string
+  createdAt: string
+  updatedAt: string
+}
 
-// export interface CreatePersonRequest {
-//   name: string
-//   email: string
-//   cpf: string
-//   gender: 'MALE' | 'FEMALE' | 'OTHER'
-//   birthDate: string
-//   address: {
-//     street: string
-//     number: string
-//     complement?: string
-//     neighborhood: string
-//     city: string
-//     state: string
-//     zipCode: string
-//   }
-// }
+export interface CreatePersonRequest {
+  name: string
+  email?: string
+  cpf: string
+  gender?: 'male' | 'female'
+  birthday: string,
+  placeBirth?: string,
+  nationality?: string
+}
 
-// export interface UpdatePersonRequest extends Partial<CreatePersonRequest> {
-//   id: string
-// }
+export interface CreatePersonResponse {
+  message: string
+  person: Person
+}
 
-// export interface PeopleListResponse {
-//   data: Person[]
-//   total: number
-//   page: number
-//   limit: number
-// }
+export interface UpdatePersonRequest extends Partial<CreatePersonRequest> {
+  id: string
+}
 
-// // Funções de API
-// export const peopleApi = {
-//   getPeople: async (page = 1, limit = 10): Promise<PeopleListResponse> => {
-//     const response = await api.get<PeopleListResponse>(`/people?page=${page}&limit=${limit}`)
-//     return response.data
-//   },
+export interface UpdatePersonResponse {
+  message: string
+  person: Person
+}
 
-//   getPerson: async (id: string): Promise<Person> => {
-//     const response = await api.get<Person>(`/people/${id}`)
-//     return response.data
-//   },
+export interface DeletePersonResponse {
+  message: string
+}
 
-//   createPerson: async (data: CreatePersonRequest): Promise<Person> => {
-//     const response = await api.post<Person>('/people', data)
-//     return response.data
-//   },
+export interface PeopleListResponse {
+  people: Person[]
+  count: number
+}
 
-//   updatePerson: async (data: UpdatePersonRequest): Promise<Person> => {
-//     const { id, ...updateData } = data
-//     const response = await api.put<Person>(`/people/${id}`, updateData)
-//     return response.data
-//   },
+// Funções de API
+export const peopleApi = {
+  getPeople: async (page = 1, limit = 10): Promise<PeopleListResponse> => {
+    const response = await api.get<PeopleListResponse>(`/people?page=${page}&limit=${limit}`)
+    return response.data
+  },
 
-//   deletePerson: async (id: string): Promise<void> => {
-//     await api.delete(`/people/${id}`)
-//   }
-// }
+  getPerson: async (id: string): Promise<Person> => {
+    const response = await api.get<Person>(`/people/${id}`)
+    return response.data
+  },
 
-// // Hooks do React Query
-// export const usePeople = (page = 1, limit = 10) => {
-//   return useQuery({
-//     queryKey: ['people', page, limit],
-//     queryFn: () => peopleApi.getPeople(page, limit),
-//     staleTime: 2 * 60 * 1000, // 2 minutos
-//   })
-// }
+  createPerson: async (data: CreatePersonRequest): Promise<CreatePersonResponse> => {
+    const response = await api.post<CreatePersonResponse>('/people', data)
+    return response.data
+  },
 
-// export const usePerson = (id: string) => {
-//   return useQuery({
-//     queryKey: ['person', id],
-//     queryFn: () => peopleApi.getPerson(id),
-//     enabled: !!id,
-//     staleTime: 5 * 60 * 1000, // 5 minutos
-//   })
-// }
+  updatePerson: async (data: UpdatePersonRequest): Promise<UpdatePersonResponse> => {
+    const { id, ...updateData } = data
+    const response = await api.patch<UpdatePersonResponse>(`/people/${id}`, updateData)
+    return response.data
+  },
 
-// export const useCreatePerson = () => {
-//   const queryClient = useQueryClient()
+  deletePerson: async (id: string): Promise<DeletePersonResponse> => {
+    const response = await api.delete<DeletePersonResponse>(`/people/${id}`)
+    return response.data
+  }
+}
+
+// Hooks do React Query
+export const usePeople = (page = 1, limit = 10) => {
+  return useQuery({
+    queryKey: ['people', page, limit],
+    queryFn: () => peopleApi.getPeople(page, limit),
+    staleTime: 2 * 60 * 1000, // 2 minutos
+  })
+}
+
+export const usePerson = (id?: string) => {
+  return useQuery({
+    queryKey: ['person', id],
+    queryFn: () => {
+      if (!id) return Promise.resolve(null)
+      return peopleApi.getPerson(id)
+    },
+    enabled: id != null,
+    staleTime: 5 * 60 * 1000, // 5 minutos
+  })
+}
+
+export const useCreatePerson = () => {
+  const queryClient = useQueryClient()
   
-//   return useMutation({
-//     mutationFn: peopleApi.createPerson,
-//     onSuccess: () => {
-//       // Invalidar cache da lista de pessoas
-//       queryClient.invalidateQueries({ queryKey: ['people'] })
-//     },
-//     onError: (error: any) => {
-//       console.error('Erro ao criar pessoa:', error)
-//     }
-//   })
-// }
+  return useMutation({
+    mutationFn: peopleApi.createPerson,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['people'] })
+    },
+  })
+}
 
-// export const useUpdatePerson = () => {
-//   const queryClient = useQueryClient()
+export const useUpdatePerson = () => {
+  const queryClient = useQueryClient()
   
-//   return useMutation({
-//     mutationFn: peopleApi.updatePerson,
-//     onSuccess: (data) => {
-//       // Atualizar cache da pessoa específica
-//       queryClient.setQueryData(['person', data.id], data)
-//       // Invalidar cache da lista de pessoas
-//       queryClient.invalidateQueries({ queryKey: ['people'] })
-//     },
-//     onError: (error: any) => {
-//       console.error('Erro ao atualizar pessoa:', error)
-//     }
-//   })
-// }
+  return useMutation({
+    mutationFn: peopleApi.updatePerson,
+    onSuccess: (data) => {
+      queryClient.setQueryData(['person', data.person.id], data.person)
+      queryClient.invalidateQueries({ queryKey: ['people'] })
+    },
+  })
+}
 
-// export const useDeletePerson = () => {
-//   const queryClient = useQueryClient()
+export const useDeletePerson = () => {
+  const queryClient = useQueryClient()
   
-//   return useMutation({
-//     mutationFn: peopleApi.deletePerson,
-//     onSuccess: () => {
-//       // Invalidar cache da lista de pessoas
-//       queryClient.invalidateQueries({ queryKey: ['people'] })
-//     },
-//     onError: (error: any) => {
-//       console.error('Erro ao deletar pessoa:', error)
-//     }
-//   })
-// } 
+  return useMutation({
+    mutationFn: peopleApi.deletePerson,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['people'] })
+    }
+  })
+} 

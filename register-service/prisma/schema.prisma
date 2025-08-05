@@ -33,11 +33,11 @@ model People {
   id          String   @id @default(uuid()) @map("_id") @db.Uuid
   name        String   @db.VarChar(225)
   gender      Gender?
-  email       String?  @unique @db.VarChar(225)
-  birthday    DateTime @db.Date
+  email       String?  @db.VarChar(225)
+  birthday    String   @db.VarChar(10)
   placeBirth  String?  @map("place_birth") @db.VarChar(100)
   nationality String?  @db.VarChar(100)
-  cpf         String   @unique @db.VarChar(11)
+  cpf         String   @db.VarChar(11)
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 

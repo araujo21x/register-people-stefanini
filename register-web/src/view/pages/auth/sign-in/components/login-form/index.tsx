@@ -1,10 +1,10 @@
 import { cn } from "@components/shadcn/lib/utils"
-import { Button } from "@components/shadcn/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@components/shadcn/components/ui/card"
 import { TextInput } from "@components/inputs/text-input"
 import { Form } from "@components/shadcn/components/ui/form"
 import { useLogin } from "./use-login"
 import { routes } from "../../../../../../app/Router/routes"
+import { DefaultButton } from "@components/button/default-button"
 
 export function LoginForm({
   className,
@@ -33,13 +33,12 @@ export function LoginForm({
                     <TextInput control={form.control} label="Senha" name="password" placeholder="********" type="password" required />
                   </div>
 
-                  <Button
+                  <DefaultButton
                     type="submit"
-                    className="w-full transition-colors duration-200 hover:bg-primary/90 active:scale-95 active:bg-primary/80"
                     disabled={isLoading}
                   >
                     Login
-                  </Button>
+                  </DefaultButton>
                 </div>
 
                 <div className="text-center text-sm">

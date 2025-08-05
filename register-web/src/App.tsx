@@ -4,6 +4,7 @@ import '@view/styles/index.css'
 import { ThemeProvider } from '@context/theme/theme-provider'
 import { AuthProvider } from './app/context/auth/auth-context'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { DefaultToastContainer } from '@components/toast'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,8 +17,11 @@ const queryClient = new QueryClient({
 
 export function App() {
   return (
+
     <QueryClientProvider client={queryClient}>
+
       <ThemeProvider>
+      <DefaultToastContainer />
         <AuthProvider>
           <BrowserRouter>
             <Router />

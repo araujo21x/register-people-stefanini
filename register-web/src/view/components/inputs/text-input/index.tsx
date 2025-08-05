@@ -22,6 +22,7 @@ interface TextInputProps<
   required?: boolean
   className?: string
   errorClassName?: string // opcional para customizar a área de erro
+  mask?: string
 }
 
 export function TextInput<
@@ -36,6 +37,7 @@ export function TextInput<
   disabled = false,
   required = false,
   className,
+  mask,
 }: TextInputProps<TFieldValues, TName>) {
 
 
@@ -56,6 +58,7 @@ export function TextInput<
               disabled={disabled}
               aria-invalid={!!fieldState.error}
               {...field}
+              {...(mask ? { inputMode: "numeric", pattern: mask } : {})}
             />
           </FormControl>
           <FormMessage className="text-xs pt-0 pl-2 pb-0" />

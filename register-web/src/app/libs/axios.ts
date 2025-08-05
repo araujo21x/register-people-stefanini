@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 export const api = axios.create({
   baseURL: `${import.meta.env.VITE_BASE_URL}/${import.meta.env.VITE_BASE_URL_PREFIX_V1}`,
@@ -26,6 +27,7 @@ api.interceptors.response.use(
     return response
   },
   (error) => {
+    toast.error(error.response?.data.message || "Erro ao processar a requisição")
     if (error.response?.status === 401) {
       localStorage.removeItem('accessToken')
       window.location.href = '/'

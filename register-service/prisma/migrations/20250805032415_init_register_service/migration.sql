@@ -20,7 +20,7 @@ CREATE TABLE "public"."people" (
     "name" VARCHAR(225) NOT NULL,
     "gender" "public"."Gender",
     "email" VARCHAR(225),
-    "birthday" DATE NOT NULL,
+    "birthday" VARCHAR(10) NOT NULL,
     "place_birth" VARCHAR(100),
     "nationality" VARCHAR(100),
     "cpf" VARCHAR(11) NOT NULL,
@@ -50,12 +50,6 @@ CREATE TABLE "public"."addresses" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "public"."users"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "people_email_key" ON "public"."people"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "people_cpf_key" ON "public"."people"("cpf");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "addresses_people_id_key" ON "public"."addresses"("people_id");

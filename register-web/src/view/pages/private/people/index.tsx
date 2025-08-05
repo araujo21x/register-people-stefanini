@@ -1,25 +1,26 @@
+
 import { DataTable } from "./components/table";
-import { columns, type Person } from "./components/table/columns";
+import { columns } from "./components/table/columns";
+import { usePeople } from "./use-people";
+import { PeopleFormDialog } from "./components/people-form-dialog";
+import type { Person } from "src/app/services/people.service";
+import { DefaultPagination } from "@components/pagination";
+
 
 export function People() {
-  const data: Person[] = [
-    {
-      id: "728ed52f",
-      name: "John Doe ",
-      cpf: "12345678901",
-      gender: "male",
-      email: "m@example.com",
-      birthday: "1990-01-01",
-      placeBirth: "São Paulo",
-      nationality: "Brazilian",
-    },
-  ]
+  const { data, page, setPage } = usePeople()
+
   return (
-    <div className="flex flex-col h-full p-6">
-      <div className="flex-1">
-        <DataTable<Person, Person> columns={columns} data={data} />
+    <div className="flex flex-col h-full p-3 justify-between">
+      <div className="py-2 flex justify-end">
+        <PeopleFormDialog type="register" />
       </div>
-      <div className="py-2 bg-amber-800">oi</div>
+      <div className="flex-1 my-2 overflow-auto max-h-[77vh]">
+        <DataTable<Person, Person> columns={columns} data={data?.people || []} />
+      </div>
+      <div className="py-2">
+        <DefaultPagination page={page} totalItens={data?.count || 1} onPageChange={setPage} />
+      </div>
     </div>
   )
 }

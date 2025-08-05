@@ -12,9 +12,9 @@ import {
   SidebarMenuItem,
 } from "@components/shadcn/components/ui/sidebar"
 import logo from "@view/assets/logo.png";
-import { Button } from "@components/shadcn/components/ui/button";
 import { useAuth } from "@context/auth/auth-context";
 import { useAppSidebar } from "./use-app-sidebar";
+import { DefaultButton } from "@components/button/default-button";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { logout } = useAuth()
@@ -63,14 +63,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="flex flex-col gap-2">
-        <Button
+        <DefaultButton
           variant="outline"
           onClick={() => logout()}
           className="text-red-600 hover:text-red-700 flex items-center gap-2"
         >
           <LogOut className="size-4" />
           Sair
-        </Button>
+        </DefaultButton>
       </SidebarFooter>
     </Sidebar>
   )

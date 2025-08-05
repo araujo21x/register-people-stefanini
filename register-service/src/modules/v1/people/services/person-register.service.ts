@@ -10,7 +10,7 @@ export class PersonRegisterService {
   constructor(private readonly prisma: PrismaService) {}
 
   async execute(body: PersonRegisterDto, user: User): Promise<PersonRegisterResponse> {
-    await this.validatePerson(body, user);
+    // await this.validatePerson(body, user);
     const person = await this.prisma.people.create({
       data: this.buildPerson(body, user),
       include: { user: true },
