@@ -1,15 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import helmet from 'helmet';
 import * as compression from 'compression';
-import { NestApplicationOptions } from '@nestjs/common';
+import { NestApplicationOptions, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const options: NestApplicationOptions = { cors: { origin: '*' } };
   const app = await NestFactory.create(AppModule, options);
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix('api');
 
+  app.enableVersioning({ type: VersioningType.URI });
   const config = new DocumentBuilder()
     .setTitle('API de cadastro de pessoas')
     .setDescription('API para cadastro de pessoas')

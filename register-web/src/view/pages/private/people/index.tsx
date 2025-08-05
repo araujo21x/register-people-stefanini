@@ -1,36 +1,25 @@
-import { Button } from "@components/shadcn/components/ui/button"
-import { useAuth } from "../../../../app/context/auth/auth-context"
- 
+import { DataTable } from "./components/table";
+import { columns, type Person } from "./components/table/columns";
+
 export function People() {
-  const { user, logout } = useAuth()
-
-  const handleLogout = () => {
-    logout()
-  }
-
+  const data: Person[] = [
+    {
+      id: "728ed52f",
+      name: "John Doe ",
+      cpf: "12345678901",
+      gender: "male",
+      email: "m@example.com",
+      birthday: "1990-01-01",
+      placeBirth: "São Paulo",
+      nationality: "Brazilian",
+    },
+  ]
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">People</h1>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-600">
-            Olá, {user?.name}!
-          </span>
-          <Button
-            variant="outline" 
-            onClick={handleLogout}
-            className="text-red-600 hover:text-red-700"
-          >
-            Sair
-          </Button>
-        </div>
+    <div className="flex flex-col h-full p-6">
+      <div className="flex-1">
+        <DataTable<Person, Person> columns={columns} data={data} />
       </div>
-      
-      <div className="bg-white rounded-lg shadow p-6">
-        <p className="text-gray-600">
-          Bem-vindo à página de pessoas. Aqui você pode gerenciar os registros de pessoas.
-        </p>
-      </div>
+      <div className="py-2 bg-amber-800">oi</div>
     </div>
   )
 }
