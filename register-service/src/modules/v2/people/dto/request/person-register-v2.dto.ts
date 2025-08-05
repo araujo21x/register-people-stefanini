@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength, IsDateString, IsEnum, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, MinLength, IsDateString, IsEnum, MaxLength } from 'class-validator';
 import { IsCPF } from '@shared/validators/IsCPF.decorator';
 import { Gender } from 'generated/prisma';
 import { AddressV2Dto } from './address-v2.dto';
+import { IsEmailOrEmpty } from '@shared/validators/IsEmailOrEmpty.decorator';
 
 export class PersonRegisterV2Dto {
   @ApiProperty({ example: 'João Silva', description: 'Nome completo da pessoa', minLength: 3 })
@@ -18,7 +19,7 @@ export class PersonRegisterV2Dto {
 
   @ApiProperty({ example: 'joao.silva@email.com', description: 'Email da pessoa', required: false })
   @IsOptional()
-  @IsEmail({}, { message: 'Email inválido' })
+  @IsEmailOrEmpty()
   email?: string;
 
   @ApiProperty({ example: '1990-05-15', description: 'Data de nascimento no formato YYYY-MM-DD' })
@@ -45,6 +46,6 @@ export class PersonRegisterV2Dto {
   cpf: string;
 
   @ApiProperty({ type: AddressV2Dto, description: 'Endereço da pessoa', required: false })
-  @IsOptional()
-  address?: AddressV2Dto;
-} 
+  @IsNotEmpty({ message: 'Endereço é obrigatório' })
+  address: AddressV2Dto;
+}

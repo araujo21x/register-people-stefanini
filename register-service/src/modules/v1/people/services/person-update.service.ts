@@ -26,12 +26,12 @@ export class PersonUpdateService {
     const build: Prisma.PeopleUpdateInput = {} as Prisma.PeopleUpdateInput;
 
     if (body.name) build.name = body.name;
-    if (body.gender) build.gender = body.gender;
-    if (body.email) build.email = body.email;
-    if (body.birthday) build.birthday = body.birthday;
-    if (body.placeBirth) build.placeBirth = body.placeBirth;
-    if (body.nationality) build.nationality = body.nationality;
     if (body.cpf) build.cpf = body.cpf;
+    if (body.birthday) build.birthday = body.birthday;
+    if (body.gender || body.gender === '') build.gender = body.gender;
+    if (body.email || body.email === '') build.email = body.email;
+    if (body.placeBirth || body.placeBirth === '') build.placeBirth = body.placeBirth;
+    if (body.nationality || body.nationality === '') build.nationality = body.nationality;
 
     return build;
   }

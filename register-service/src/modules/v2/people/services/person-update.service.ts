@@ -45,39 +45,28 @@ export class PersonUpdateService {
     const build: Prisma.PeopleUpdateInput = {} as Prisma.PeopleUpdateInput;
 
     if (body.name) build.name = body.name;
-    if (body.gender) build.gender = body.gender;
-    if (body.email) build.email = body.email;
+    if (body.gender || body.gender === '') build.gender = body.gender;
+    if (body.email || body.email === '') build.email = body.email;
     if (body.birthday) build.birthday = body.birthday;
-    if (body.placeBirth) build.placeBirth = body.placeBirth;
-    if (body.nationality) build.nationality = body.nationality;
+    if (body.placeBirth || body.placeBirth === '') build.placeBirth = body.placeBirth;
+    if (body.nationality || body.nationality === '') build.nationality = body.nationality;
     if (body.cpf) build.cpf = body.cpf;
     if (body.address) build.address = this.buildAddress(body.address);
 
     return build;
   }
 
-  private buildAddress(address: AddressV2Dto) {
-    return {
-      upsert: {
-        create: {
-          street: address.street,
-          number: address.number || 'N/A',
-          complement: address.complement,
-          neighborhood: address.neighborhood,
-          city: address.city,
-          state: address.state,
-          zipCode: address.zipCode,
-        },
-        update: {
-          street: address.street,
-          number: address.number || 'N/A',
-          complement: address.complement,
-          neighborhood: address.neighborhood,
-          city: address.city,
-          state: address.state,
-          zipCode: address.zipCode,
-        },
-      },
-    };
+  private buildAddress(address: AddressV2Dto): Prisma.AddressUpdateOneWithoutPeopleNestedInput {
+    const update: Prisma.AddressUpdateInput = {} as Prisma.AddressUpdateInput;
+
+    if (address.street) update.street = address.street;
+    if (address.number || address.number === '') update.number = address.number === '' ? 'N/A' : address.number;
+    if (address.complement || address.complement === '') update.complement = address.complement;
+    if (address.neighborhood) update.neighborhood = address.neighborhood;
+    if (address.city) update.city = address.city;
+    if (address.state) update.state = address.state;
+    if (address.zipCode) update.zipCode = address.zipCode;
+
+    return { update };
   }
 }

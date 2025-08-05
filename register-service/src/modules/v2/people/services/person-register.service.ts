@@ -40,7 +40,7 @@ export class PersonRegisterService {
       user: { connect: { id: user.id } },
     };
 
-    if (body.address) personData.address = { create: this.buildAddress(body.address) };
+    personData.address = { create: this.buildAddress(body.address) };
 
     return personData;
   }

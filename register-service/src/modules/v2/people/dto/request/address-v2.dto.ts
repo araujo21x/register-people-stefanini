@@ -52,4 +52,4 @@ export class AddressV2Dto {
   @MaxLength(8, { message: 'CEP deve ter 8 dígitos' })
   @Matches(/^\d{8}$/, { message: 'CEP deve conter apenas 8 dígitos numéricos' })
   zipCode: string;
-} 
+}

@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength, IsDateString, IsEnum, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, MinLength, IsDateString, IsEnum, MaxLength } from 'class-validator';
 import { IsCPF } from '@shared/validators/IsCPF.decorator';
 import { Gender } from 'generated/prisma';
+import { IsEmailOrEmpty } from '@shared/validators/IsEmailOrEmpty.decorator';
 
 export class PersonRegisterDto {
   @ApiProperty({ example: 'João Silva', description: 'Nome completo da pessoa', minLength: 3 })
@@ -17,8 +18,8 @@ export class PersonRegisterDto {
 
   @ApiProperty({ example: 'joao.silva@email.com', description: 'Email da pessoa', required: false })
   @IsOptional()
-  @IsEmail({}, { message: 'Email inválido' })
-  email?: string;
+  @IsEmailOrEmpty({})
+  email: string;
 
   @ApiProperty({ example: '1990-05-15', description: 'Data de nascimento no formato YYYY-MM-DD' })
   @IsDateString({}, { message: 'Data de nascimento deve ser uma data válida no formato YYYY-MM-DD' })
