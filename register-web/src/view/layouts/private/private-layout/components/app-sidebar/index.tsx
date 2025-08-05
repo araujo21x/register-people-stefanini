@@ -31,7 +31,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <img src={logo} alt="Logo" className="size-8" />
                 </div>
                 <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-medium">Register People</span>
+                  <span className="font-medium">Stefanini</span>
                   <span className="">v1</span>
                 </div>
               </Link>

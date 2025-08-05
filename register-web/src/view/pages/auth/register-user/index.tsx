@@ -10,7 +10,7 @@ export function RegisterUser() {
       <div className="flex flex-col items-center justify-center gap-6 p-6 md:p-10">
         <a>
           <img src={logo} alt="Register People" className="inline-block mr-2 align-middle w-12 h-12" />
-          Register People
+          Stefanini
         </a>
 
         <RegisterForm />

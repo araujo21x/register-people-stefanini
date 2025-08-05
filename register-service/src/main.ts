@@ -17,6 +17,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addBearerAuth()
     .addServer('http://localhost:9000', 'local')
+    .addServer('https://register-people-stefanini.onrender.com', 'homolog')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
