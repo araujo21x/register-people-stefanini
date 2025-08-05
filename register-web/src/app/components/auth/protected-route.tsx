@@ -5,6 +5,7 @@ import { routes } from '../../Router/routes'
 import PrivateLayout from '@layouts/private/private-layout'
 import { DefaultLoading } from '@components/loading'
 
+
 interface ProtectedRouteProps {
   children: React.ReactNode
 }
@@ -13,7 +14,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { isAuthenticated, isLoading } = useAuth()
   const location = useLocation()
 
-  if (isLoading) return <DefaultLoading />
+  if (isLoading) return <DefaultLoading isLoading={isLoading} />
   
   if (!isAuthenticated) {
     return <Navigate to={routes.auth.signIn} state={{ from: location }} replace />

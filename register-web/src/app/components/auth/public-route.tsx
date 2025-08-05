@@ -10,7 +10,7 @@ interface PublicRouteProps {
 
 export function PublicRoute({ children }: PublicRouteProps) {
   const { isAuthenticated, isLoading } = useAuth()
-  if (isLoading) return <DefaultLoading />
+  if (isLoading) return <DefaultLoading isLoading={isLoading} />
 
   if (isAuthenticated) {
     return <Navigate to={routes.private.people} replace />
