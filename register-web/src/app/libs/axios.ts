@@ -11,9 +11,11 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const token = localStorage.getItem('accessToken')
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`
+      }
     }
     return config
   },
@@ -29,8 +31,14 @@ api.interceptors.response.use(
   (error) => {
     toast.error(error.response?.data.message || "Erro ao processar a requisição")
     if (error.response?.status === 401) {
-      localStorage.removeItem('accessToken')
-      window.location.href = '/'
+      
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.removeItem('accessToken')
+      }
+
+      if (typeof window !== 'undefined' && window.location) {
+        window.location.href = '/'
+      }
     }
     return Promise.reject(error)
   }

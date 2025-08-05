@@ -33,9 +33,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const isAuthenticated = !!user
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken')
-    if (token) {
-      profileQuery.refetch()
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const token = localStorage.getItem('accessToken')
+      if (token) {
+        profileQuery.refetch()
+      } else {
+        setIsLoading(false)
+      }
     } else {
       setIsLoading(false)
     }
@@ -46,8 +50,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(profileQuery.data)
       setIsLoading(false)
     } else if (profileQuery.isError) {
-      localStorage.removeItem('accessToken')
-      localStorage.removeItem('user')
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('user')
+      }
       setUser(null)
       setIsLoading(false)
     }
@@ -57,7 +63,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await loginMutation.mutateAsync(data)
       setUser(response.user)
-      localStorage.setItem('user', JSON.stringify(response.user))
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('user', JSON.stringify(response.user))
+      }
     } catch (error) {
       throw error
     }
@@ -67,15 +75,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const response = await registerMutation.mutateAsync(data)
       setUser(response.user)
-      localStorage.setItem('user', JSON.stringify(response.user))
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('user', JSON.stringify(response.user))
+      }
     } catch (error) {
       throw error
     }
   }
 
   const logout = () => {
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('user')
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.removeItem('accessToken')
+      localStorage.removeItem('user')
+    }
     setUser(null)
   }
 
